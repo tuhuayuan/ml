@@ -22,12 +22,16 @@ p = zeros(size(X, 1), 1);
 %
 
 
-
-
-
-
-
-
+% size(x1) 5000, 25
+X = [ones(m, 1) X];
+x1 = X * transpose(Theta1);
+x1 = sigmoid(x1);
+% size(x2) 5000, 10
+x1 = [ones(m, 1) x1];
+x2 = x1 * transpose(Theta2);
+x2 = sigmoid(x2);
+% get max for each row
+[nop, p] = max(x2, [], 2);
 
 % =========================================================================
 

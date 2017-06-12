@@ -35,18 +35,17 @@ grad = zeros(size(theta));
 %           temp(1) = 0;   % because we don't add anything for j = 0  
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
+g = sigmoid(X * theta); 
+r = sum(theta(2:end, 1) .^ 2) .* lambda / (2 * m);
+J = sum( -y .* log(g) - (1 - y) .* log(1 - g)) / m + r;
 
-
-
-
-
-
-
-
-
+% 技巧： grad为4*1，X为5*4，(g-y)为5*1 所以Xt*(g-y)为4*1
+grad = (transpose(X) * (g - y)) ./ m;
+temp = theta;
+temp(1) = 0;
+grad = grad + (lambda / m) * temp;
 
 % =============================================================
-
 grad = grad(:);
 
 end
