@@ -2,14 +2,55 @@
 
 #%%
 import numpy as np
+import matplotlib.pyplot as plt
 
+fig = plt.figure()
+fig.add_subplot(221)
+xx1, xx2 = np.meshgrid(np.arange(-1, 1, 0.01), np.arange(-1, 1, 0.01))
+plt.xlim(-1, 1)
+plt.ylim(-1, 1)
+plt.contourf(xx1, xx2, xx1**2 + xx2**2)
 
-nx, ny = (10, 5)
-x = np.linspace(0, 1, nx)
-y = np.linspace(0, 1, ny)
-xv, yv = np.meshgrid(x, y)
-print(xv)
-print(yv)
+fig.add_subplot(222) 
+xx1, xx2 = np.meshgrid(np.arange(-1, 1, 0.01), np.arange(-1, 1, 0.01))
+plt.xlim(-1, 1)
+plt.ylim(-1, 1)
+z1 = xx1.copy()
+z2 = xx2.copy()
+z1[z1>=0] = 1
+z1[z1<0] = -1
+z2[z2>=0] = 2
+z2[z2<0] = -2
+plt.contourf(xx1, xx2, z1+z2+10)
+
+fig.add_subplot(223) 
+xx1, xx2 = np.meshgrid(np.arange(-1, 1, 0.01), np.arange(-1, 1, 0.01))
+plt.xlim(-1, 1)
+plt.ylim(-1, 1)
+plt.contourf(xx1, xx2, xx1+xx2)
+
+fig.add_subplot(224) 
+xx1, xx2 = np.meshgrid(np.arange(-1, 1, 0.01), np.arange(-1, 1, 0.01))
+plt.xlim(-1, 1)
+plt.ylim(-1, 1)
+plt.contourf(xx1, xx2, xx1+2*xx2)
+
+#%%
+import numpy as np
+import matplotlib.pyplot as plt
+from numpy.random import randn
+
+fig = plt.figure()
+ax1 = fig.add_subplot(2, 2, 1)
+ax2 = fig.add_subplot(2, 2, 2)
+ax3 = fig.add_subplot(2, 2, 3)
+ax4 = fig.add_subplot(2, 2, 4)
+ax1.plot(randn(50).cumsum(), 'k--')
+x = np.arange(0., 5., 0.2)
+ax2.plot(x, np.sin(x), 'g--')
+ax2.axis([0, np.pi * 2, -1.5, 1.5])
+ax3.hist(randn(1000), bins=50, color='k')
+ax4.scatter(np.arange(30), np.arange(30) + 3 * randn(30))
 
 #%%
 import numpy as np
@@ -32,8 +73,10 @@ def plot_decision_regions(X, y, classifier,
     xx1, xx2 = np.meshgrid(
       np.arange(x1_min, x1_max, resolution),
       np.arange(x2_min, x2_max, resolution))
+    
     Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
     Z = Z.reshape(xx1.shape)
+
     plt.contourf(xx1, xx2, Z, alpha=0.4, cmap=cmap)
     plt.xlim(xx1.min(), xx1.max())
     plt.ylim(xx2.min(), xx1.max())
