@@ -67,29 +67,26 @@ R = (lambda / (2 * m)) * ...
 D1 = zeros(size(Theta1));
 D2 = zeros(size(Theta2));
 
+% map label to vector
+Y = zeros(m, num_labels);
 for t = 1:m
-  % map label to vector
-  Y = zeros(num_labels, 1);
-  Y(y(t)) = 1;
-
-  a1 = transpose([1 X(t, :)]);
-  z2 = Theta1 * a1;
-  a2 = [1; sigmoid(z2)];
-  z3 = Theta2 * a2;
-  a3 = sigmoid(z3);
-
-  cost_t = (-Y .* log(a3)) - (1 - Y) .* log(1 - a3);
-  J = J + sum(cost_t);
-
-  delta_3 = a3 - Y;
-  delta_2 = (transpose(Theta2) * delta_3) .* [1; sigmoidGradient(z2)];
-  delta_2 = delta_2(2:end);
-
-  D1 = D1 + delta_2 * transpose(a1);
-  D2 = D2 + delta_3 * transpose(a2);
+  Y(t, y(t)) = 1;
 end
 
-J = J / m + R;
+a1 = transpose([ones(m, 1) X]);
+z2 = Theta1 * a1;
+a2 = [ones(1, size(z2, 2)); sigmoid(z2)];
+z3 = Theta2 * a2;
+a3 = transpose(sigmoid(z3));
+
+J = sum(sum((-Y .* log(a3)) - (1 - Y) .* log(1 - a3), 2) / m) + R;
+
+delta_3 = a3 - Y;
+delta_2 = delta_3 * Theta2 .* [ones(m, 1) transpose(sigmoidGradient(z2))];
+delta_2 = delta_2(:, 2:end);
+
+D1 = transpose(a1 * delta_2);
+D2 = transpose(a2 * delta_3);
 
 temp = Theta1;
 temp(:, 1) = 0;
