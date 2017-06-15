@@ -1,5 +1,6 @@
-#-*- coding: utf-8 -*-
-"""编程作业"""
+# -*- coding: utf-8 -*-
+"""machine-learning-ex2 for python"""
+
 #%%
 import numpy as np
 
