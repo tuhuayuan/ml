@@ -102,4 +102,5 @@ ENV/
 
 /tools
 **/**/octave-workspace
+**/**/.DS_Store
 octave-workspace

@@ -22,6 +22,24 @@ sigma = 0.3;
 %  Note: You can compute the prediction error using 
 %        mean(double(predictions ~= yval))
 %
+pairs = [1, 0.1; 
+         1, 0.3;
+         3, 0.1;
+         3, 0.3;];
+
+%for i = 1:size(pairs, 1)
+%  p = pairs(i, :);
+%  model= svmTrain(X, y, p(1), @(x1, x2) gaussianKernel(x1, x2, p(2))); 
+%  predictions = svmPredict(model, Xval);
+%  errs = mean(double(predictions ~= yval));
+%
+%  fprintf('\nParams: %f, %f; errs: %f \n', p(1), p(2), errs);
+%  visualizeBoundary(X, y, model);
+%  pause;
+%end
+
+C = 1;
+sigma = 0.1;
 
 
 
