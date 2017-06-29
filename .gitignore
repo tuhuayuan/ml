@@ -99,6 +99,4 @@ ENV/
 .mypy_cache/
 
 /tools
-**/**/octave-workspace
 **/**/.DS_Store
-octave-workspace
